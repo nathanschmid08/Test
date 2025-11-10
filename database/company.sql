@@ -1,11 +1,20 @@
 /*
 
-+────────┌──────────┌──────────┌─────────────────+
-|COMP_ID |COMP_NAME |COMP_DESC |COMP_CREATE_DATE |
-+────────└──────────└──────────└─────────────────+
-COMP_ID             INT             PRIMARY KEY,
++────────┌──────────┌──────────┌─────────────────┌─────────────────+
+|COMP_ID |COMP_NAME |COMP_DESC |COMP_CREATE_DATE |COMP_UPDATE_DATE |
++────────└──────────└──────────└─────────────────└─────────────────+
+COMP_ID             INT             AUTO_INCREMENT              PRIMARY KEY,
 COMP_NAME           VARCHAR(100)    NOT NULL,
 COMP_DESC           VARCHAR(500)    NOT NULL,
 COMP_CREATE_DATE    DATETIME        DEFAULT CURRENT_TIMESTAMP
+COMP_UPDATE_DATE    DATETIME        DEFAULT NULL                ON UPDATE CURRENT_TIMESTAMP
 
 */
+
+CREATE TABLE COMPANY (
+    COMP_ID             INT             NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    COMP_NAME           VARCHAR(100)    NOT NULL,
+    COMP_DESC           VARCHAR(500)    NOT NULL,
+    COMP_CREATE_DATE    DATETIME        DEFAULT CURRENT_TIMESTAMP,
+    COMP_UPDATE_DATE    DATETIME        DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
