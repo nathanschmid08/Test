@@ -8,7 +8,14 @@ IS = Information Security
 SentinelIS
 │
 ├─ backend/
-│   └─ ConnectDB.java
+│   ├─ main/
+│   │   ├─ java/
+│   │   │   ├─ .env              
+│   │   │   ├─ ConnectDB.java 
+│   │   │   └─ TestConnectDB.java
+│   │   └─ node/
+│   │       └─ server.js
+│   └─ pom.xml   
 │
 ├─ database/
 │   ├─ chat/
