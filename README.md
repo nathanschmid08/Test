@@ -8,6 +8,10 @@ IS = Information Security
 Test
 │
 ├─ database/
+│   ├─ chat/
+│   │   ├─ conversation.sql 
+│   │   ├─ conversation-participants.sql
+│   │   └─ messages.sql              
 │   ├─ testing/
 │   │   └─ inserts.sql              
 │   ├─ company.sql 
