@@ -13,12 +13,17 @@ SentinelIS
 │   │   │   ├─ .env              
 │   │   │   ├─ ConnectDB.java 
 │   │   │   └─ TestConnectDB.java
-│   │   └─ node/
+│   │   ├─ node/
+│   │   │   ├─ .env              
+│   │   │   └─ server3000.js
+│   │   └─ python/
 │   │       ├─ .env              
-│   │       └─ server3000.js
+│   │       └─ TestConnectMongoDB.py
 │   └─ pom.xml   
 │
 ├─ database/
+│   ├─ asset-mgmt/
+│   │   └─ assets.sql
 │   ├─ chat/
 │   │   ├─ querys/
 │   │   │   └─ query.sql              
@@ -39,6 +44,10 @@ SentinelIS
 │   ├─ CSS/
 │   │   └─ style-guide.md
 │   ├─ icons/
+│   │   ├─ cli/
+│   │   │   ├─ asciitest.sh              
+│   │   │   ├─ eye.txt              
+│   │   │   └─ sentinelis.txt              
 │   │   ├─ icon.svg
 │   │   └─ logo.svg
 │   ├─ scripts/
@@ -66,12 +75,15 @@ SentinelIS
 - JavaScript
 
 ### Backend
-- Java
 - Node.js
 - Docker
 
 ### Database
 - MySQL
+
+## Testing
+- Java
+- Python
 
 
 ## Note
