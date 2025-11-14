@@ -32,6 +32,7 @@ SentinelIS
 │   │   ├─ conversation-participants.sql
 │   │   └─ messages.sql              
 │   ├─ testing/
+│   │   ├─ inserts-assets.js
 │   │   └─ inserts.sql              
 │   ├─ company.sql 
 │   ├─ user-preferences.sql         
@@ -81,6 +82,7 @@ SentinelIS
 
 ### Database
 - MySQL
+- MongoDB
 
 ### Testing
 - Java
