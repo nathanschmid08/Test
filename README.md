@@ -35,7 +35,9 @@ SentinelIS
 │   │   └─ messages.sql              
 │   ├─ testing/
 │   │   ├─ inserts-assets.js
-│   │   └─ inserts.sql              
+│   │   ├─ inserts.sql
+│   │   ├─ querys.sql
+│   │   └─ updates.sql              
 │   ├─ company.sql 
 │   ├─ user-preferences.sql         
 │   └─ users.sql
