@@ -6,7 +6,7 @@
 open the browser on http://localhost:3000/login.html
 if the login is successful, you will be redirected to http://localhost:3000/dashboard.html
 
-if you want to setup for a ew company, you will be redirected to http://localhost:3000/setup.html
+if you want to setup for a new company, you will be redirected to http://localhost:3000/setup.html
 
 API Endpoints:
 - GET  /api/test       - test database connection

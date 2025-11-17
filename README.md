@@ -55,7 +55,8 @@ SentinelIS
 │   │   ├─ icon.svg
 │   │   └─ logo.svg
 │   ├─ scripts/
-│   │   └─ login-handler.js
+│   │   ├─ login-handler.js
+│   │   └─ setup-handler.js
 │   ├─ styles/
 │   │   └─ login.css
 │   ├─ admin-cr-user.html
