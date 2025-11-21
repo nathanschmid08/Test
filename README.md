@@ -99,6 +99,13 @@ SentinelIS
 - Java (Test Connection to MySQL)
 - Python (Test Connection to MongoDB)
 
+## In Planing; not used yet
+- Redis
+- Prisma
+- Zod
+- Pino for Logging
+- SQLite for saving binary blobs (for images)
+- ASP .NET for Chat system
 
 ## Note
 

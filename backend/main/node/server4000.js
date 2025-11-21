@@ -5,21 +5,21 @@
 
 */
 
-// server4000.js – Kombinierter GraphQL Microservice (MySQL + MongoDB)
+// server4000.js – Combines GraphQL Microservice (MySQL + MongoDB)
 require("dotenv").config({ path: __dirname + "/.env" });
 const { ApolloServer } = require("@apollo/server");
 const { startStandaloneServer } = require("@apollo/server/standalone");
 const { gql } = require("graphql-tag");
 
 // ----------------------------
-// MySQL Verbindung
+// MySQL Connection
 // ----------------------------
 const mysql = require("mysql2/promise");
 
-// MySQL Verbindung
+// MySQL Connection Pool
 console.log("[INIT] Creating MySQL connection pool...");
 const mysqlPool = mysql.createPool({
-  host: process.env.MYSQL_HOST || "localhost",  // Fallback zu "mysql" für Docker
+  host: process.env.MYSQL_HOST || "localhost",  // Fallback to "mysql" for Docker
   port: process.env.MYSQL_PORT || 3307,
   user: process.env.MYSQL_USER,
   password: process.env.MYSQL_PASSWORD, 
@@ -28,7 +28,7 @@ const mysqlPool = mysql.createPool({
 console.log(`[INIT] MySQL pool configured for ${process.env.MYSQL_HOST || "mysql"}:${process.env.MYSQL_PORT || 3306}/${process.env.MYSQL_DATABASE}`);
 
 // ----------------------------
-// MongoDB Verbindung
+// MongoDB Connection
 // ----------------------------
 const { MongoClient } = require("mongodb");
 
@@ -38,7 +38,7 @@ const mongoClient = new MongoClient(process.env.MONGO_CONNECTION_STRING);
 let mongoDB;
 
 // ----------------------------
-// GraphQL Schema
+// GraphQL Scheme
 // ----------------------------
 const typeDefs = gql`
 
@@ -82,7 +82,7 @@ const typeDefs = gql`
     last_audit: LastAudit
   }
 
-  # --- Kombinierter GraphQL-Typ ---
+  # --- Combinded GraphQL-Typ ---
   type Asset {
     asset_id: ID!
     mysql: AssetMgmt!
@@ -217,7 +217,7 @@ async function getMongoAsset(asset_id) {
 
 
 // ----------------------------
-// Server starten
+// Server staertup
 // ----------------------------
 (async () => {
   try {
@@ -225,7 +225,7 @@ async function getMongoAsset(asset_id) {
     console.log("  STARTING GRAPHQL MICROSERVICE");
     console.log("========================================\n");
 
-    // Mongo verbinden
+    // Mongo connection
     console.log("[STARTUP] Connecting to MongoDB...");
     console.log(`[STARTUP] Connection string: ${process.env.MONGO_CONNECTION_STRING.replace(/\/\/.*:.*@/, '//***:***@')}`);
     
