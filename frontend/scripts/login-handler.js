@@ -14,6 +14,10 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
         });
         const data = await res.json();
         if (res.ok && data.success) {
+            // remember company id for admin actions
+            try {
+                localStorage.setItem('companyId', company);
+            } catch (_) {}
             // server can return redirect path
             window.location.href = data.redirect || '/dashboard.html';
         } else {

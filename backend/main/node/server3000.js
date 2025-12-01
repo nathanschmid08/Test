@@ -7,11 +7,17 @@ open the browser on http://localhost:3000/login.html
 if the login is successful, you will be redirected to http://localhost:3000/dashboard.html
 
 if you want to setup for a new company, you will be redirected to http://localhost:3000/setup.html
+after the setup, you will receive your company ID and be able to login with the created user
+
+If the login was successfull you will find yourself at: http://localhost:3000/dashboard.html
+From there you can add more users to your company via the "Add User" button. 
+From wich you will be redirected to http://localhost:3000/adduser.html
 
 API Endpoints:
-- GET  /api/test       - test database connection
-- POST /api/login      - user login
-- POST /api/setup      - initial setup for a new company
+- GET  /api/test        - test database connection
+- POST /api/login       - user login
+- POST /api/setup       - initial setup for a new company
+- POST /api/users       - create a new user for an existing company
 
 */
 
@@ -159,6 +165,34 @@ app.post('/api/setup', async (req, res) => {
         return res.json({ success: true, message: 'Setup completed successfully', companyId, userId });
     } catch (err) {
         console.error('Setup error:', err);
+        return res.status(500).json({ success: false, message: 'Server error: ' + err.message });
+    }
+});
+
+// Create additional user for an existing company
+app.post('/api/users', async (req, res) => {
+    console.log("POST /api/users received with body:", req.body);
+    const { companyId, role, firstname, surname, username, password } = req.body || {};
+
+    if (!companyId || !role || !firstname || !surname || !username || !password) {
+        return res.status(400).json({ success: false, message: 'Missing fields' });
+    }
+
+    try {
+        const conn = await pool.getConnection();
+
+        const [result] = await conn.query(
+            'INSERT INTO USERS (COMP_ID, USER_ABBR, USER_SURNAME, USER_FIRST_NAME, USER_ROLE, USER_PASSWORD) VALUES (?, ?, ?, ?, ?, ?)',
+            [companyId, username, surname, firstname, role, password]
+        );
+
+        const userId = result.insertId;
+        console.log("Additional user created with ID:", userId, "for company:", companyId);
+
+        conn.release();
+        return res.json({ success: true, message: 'User created successfully', userId });
+    } catch (err) {
+        console.error('Create user error:', err);
         return res.status(500).json({ success: false, message: 'Server error: ' + err.message });
     }
 });

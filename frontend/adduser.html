@@ -11,6 +11,12 @@
 </head>
 <body>
     <form id="CreateUserForm">
+        <label for="companyId"><i class="ri-building-4-fill"></i> Company ID</label>
+        <p>Enter the Company ID for which you want to create the user</p>
+        <input type="text" id="companyId" name="companyId" required>
+
+        <br>
+
         <label for="role"><i class="ri-briefcase-3-fill"></i> Role</label>
         <p>Enter the Role for the new user</p>
         <input type="text" id="role" name="role" required>
@@ -46,6 +52,10 @@
             <i class="ri-user-add-fill"></i>
             Create User
         </button>
+
+        <div id="createUserMessage"></div>
     </form>
+
+    <script src="scripts/adduser.js"></script>
 </body>
 </html>

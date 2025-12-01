@@ -190,6 +190,8 @@ button.ghost:hover{
 }
 
 .setup-assistant{
+    position:sticky;
+    top:20px;
     padding:28px;
     display:flex;
     flex-direction:column;

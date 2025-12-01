@@ -28,8 +28,16 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             const result = await response.json();
             if (result.success) {
-                // Setup erfolgreich, Weiterleitung
-                window.location.href = 'admin-cr-user.html';
+                // Setup erfolgreich, Company-ID anzeigen und Hinweis geben
+                try {
+                    if (result.companyId) {
+                        alert(`Your company has been created.\n\nCompany ID: ${result.companyId}\n\nPlease write this ID down carefully – you will need it to add users later.`);
+                    } else {
+                        alert('Your company has been created. Please remember the Company ID that was assigned in the system.');
+                    }
+                } catch (_) {}
+                // Weiterleitung zum Dashboard
+                window.location.href = 'dashboard.html';
             } else {
                 // Fehler vom Server anzeigen
                 errorDiv.textContent = result.message || "An unknown error occurred";
