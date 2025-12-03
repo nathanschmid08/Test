@@ -59,11 +59,14 @@ SentinelIS
 │   │   ├─ icon.svg
 │   │   └─ logo.svg
 │   ├─ scripts/
+│   │   ├─ adduser.js
 │   │   ├─ login-handler.js
+│   │   ├─ renderer.js
 │   │   └─ setup-handler.js
 │   ├─ styles/
-│   │   └─ login.css
-│   ├─ admin-cr-user.html
+│   │   ├─ login.css
+│   │   └─ setup.css
+│   ├─ adduser.html
 │   ├─ dashboard.html
 │   ├─ index.html
 │   ├─ login.html
@@ -119,7 +122,7 @@ SentinelIS
 
 ## Note
 
-> Some of the code and/or documentation in this project may have been generated, improved, or refactored with the assistance of AI tools such as GitHub Copilot, ChatGPT, or Claude, based on prompts written by the author. All code and associated documentation is licensed under the Non-Commercial Use License (see LICENSE). 
+> Some of the code and/or documentation in this project may have been generated, improved, or refactored with the assistance of AI tools such as GitHub Copilot, ChatGPT, or Claude, based on prompts written by the author. All code and associated documentation is licensed under the GPL-3.0 License (see LICENSE). 
 
 ## Documentation
 This is the link to the official Documentation: [Documentation](https://sentinelis.github.io/Documentation/)
