@@ -7,6 +7,7 @@
     <!--Link for Remix Icons-->
     <link href="https://unpkg.com/remixicon/fonts/remixicon.css" rel="stylesheet">
     <link rel="stylesheet" href="styles/setup.css">
+    <link rel="stylesheet" href="styles/mimo.css">
 
     <title>Setup</title>
 </head>
@@ -84,7 +85,7 @@
             <i class="ri-robot-3-fill"></i>
             <h2>Chat assistant</h2>
             <p class="muted">Need help with requirements? Ask me while you configure SentinelIS.</p>
-            <button type="button" class="ghost">Ask Mimo</button>
+            <button type="button" class="ghost" id="askMimoBtn">Ask Mimo</button>
         </aside>
     </main>
 
@@ -142,6 +143,46 @@
         </div>
     </div>
 
+    <!-- Mimo Chat Popup -->
+    <div id="mimoChatOverlay" class="mimo-chat-overlay mimo-chat-hidden" aria-hidden="true">
+        <div class="mimo-chat-modal" role="dialog" aria-labelledby="mimoChatTitle" aria-modal="true">
+            <div class="mimo-chat-header">
+                <div class="mimo-chat-title-wrapper">
+                    <i class="ri-robot-3-fill"></i>
+                    <h2 id="mimoChatTitle">Mimo</h2>
+                </div>
+                <button type="button" class="mimo-chat-close" id="mimoChatCloseBtn" aria-label="Close">
+                    <i class="ri-close-line"></i>
+                </button>
+            </div>
+            <div class="mimo-chat-body" id="mimoChatBody">
+                <div class="mimo-message mimo-message-bot">
+                    <div class="mimo-message-avatar">
+                        <i class="ri-robot-3-fill"></i>
+                    </div>
+                    <div class="mimo-message-content">
+                        <p>Hello! I'm Mimo, your personal chat assistant. How can I help you with SentinelIS setup today?</p>
+                    </div>
+                </div>
+            </div>
+            <div class="mimo-chat-footer">
+                <form id="mimoChatForm" class="mimo-chat-input-wrapper">
+                    <input 
+                        type="text" 
+                        id="mimoChatInput" 
+                        placeholder="Ask me anything about SentinelIS..." 
+                        autocomplete="off"
+                        required
+                    />
+                    <button type="submit" class="mimo-chat-send" id="mimoChatSendBtn" aria-label="Send message">
+                        <i class="ri-send-plane-fill"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <script src="scripts/setup-handler.js"></script>
+    <script src="scripts/mimo.js"></script>
 </body>
 </html>

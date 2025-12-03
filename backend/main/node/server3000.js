@@ -4,10 +4,12 @@
 ++-------------------------------++
 
 open the browser on http://localhost:3000/login.html
-if the login is successful, you will be redirected to http://localhost:3000/dashboard.html
+if the login is successful, you will be redirected to http://localhost:3000/dashboard.html .
 
 if you want to setup for a new company, you will be redirected to http://localhost:3000/setup.html
-after the setup, you will receive your company ID and be able to login with the created user
+after the setup, you will receive your company ID and be able to login with the created user.
+
+if you need help during the setup, you can click on the "Ask Mimo" button in the upper right corner of the page.
 
 If the login was successfull you will find yourself at: http://localhost:3000/dashboard.html
 From there you can add more users to your company via the "Add User" button. 
@@ -18,6 +20,7 @@ API Endpoints:
 - POST /api/login       - user login
 - POST /api/setup       - initial setup for a new company
 - POST /api/users       - create a new user for an existing company
+- POST /api/chatbot     - chatbot endpoint
 
 */
 
@@ -25,6 +28,7 @@ const express = require('express');
 const mysql = require('mysql2/promise');
 const path = require('path');
 const bcrypt = require('bcryptjs');
+const fs = require('fs').promises;
 require('dotenv').config(); 
 
 console.log("Starting server on port 3000...");
@@ -197,6 +201,113 @@ app.post('/api/users', async (req, res) => {
     }
 });
 
+// Helper function to calculate Levenshtein distance
+function levenshteinDistance(str1, str2) {
+    const m = str1.length;
+    const n = str2.length;
+    const dp = Array(m + 1).fill(null).map(() => Array(n + 1).fill(0));
+
+    for (let i = 0; i <= m; i++) dp[i][0] = i;
+    for (let j = 0; j <= n; j++) dp[0][j] = j;
+
+    for (let i = 1; i <= m; i++) {
+        for (let j = 1; j <= n; j++) {
+            if (str1[i - 1].toLowerCase() === str2[j - 1].toLowerCase()) {
+                dp[i][j] = dp[i - 1][j - 1];
+            } else {
+                dp[i][j] = Math.min(
+                    dp[i - 1][j] + 1,
+                    dp[i][j - 1] + 1,
+                    dp[i - 1][j - 1] + 1
+                );
+            }
+        }
+    }
+
+    return dp[m][n];
+}
+
+// Helper function to calculate similarity score (0-1)
+function calculateSimilarity(input, question) {
+    const inputLower = input.toLowerCase().trim();
+    const questionLower = question.toLowerCase().trim();
+
+    // Exact match
+    if (inputLower === questionLower) {
+        return 1.0;
+    }
+
+    // Word-based similarity
+    const inputWords = inputLower.split(/\s+/);
+    const questionWords = questionLower.split(/\s+/);
+    const commonWords = inputWords.filter(word => questionWords.includes(word));
+    const wordSimilarity = (commonWords.length * 2) / (inputWords.length + questionWords.length);
+
+    // Levenshtein distance similarity
+    const maxLength = Math.max(inputLower.length, questionLower.length);
+    const levenshteinSim = maxLength > 0 ? 1 - (levenshteinDistance(inputLower, questionLower) / maxLength) : 0;
+
+    // Combined score (weighted average)
+    return (wordSimilarity * 0.6) + (levenshteinSim * 0.4);
+}
+
+// Chatbot endpoint
+app.post('/api/chatbot', async (req, res) => {
+    console.log("POST /api/chatbot received with body:", req.body);
+    const { question } = req.body || {};
+
+    if (!question || typeof question !== 'string' || question.trim().length === 0) {
+        return res.status(400).json({ success: false, message: 'Question is required' });
+    }
+
+    try {
+        // Read the FAQ JSON file
+        const faqPath = path.join(__dirname, 'Mimo', 'qua.json');
+        const faqData = await fs.readFile(faqPath, 'utf8');
+        const faqs = JSON.parse(faqData);
+
+        if (!faqs.faqs || !Array.isArray(faqs.faqs)) {
+            return res.status(500).json({ success: false, message: 'Invalid FAQ data structure' });
+        }
+
+        let bestMatch = null;
+        let bestScore = 0;
+        const similarityThreshold = 0.3; // Minimum similarity threshold
+
+        // Find the most similar question
+        for (const faq of faqs.faqs) {
+            if (!faq.questions || !Array.isArray(faq.questions)) continue;
+
+            for (const faqQuestion of faq.questions) {
+                const similarity = calculateSimilarity(question.trim(), faqQuestion);
+                if (similarity > bestScore) {
+                    bestScore = similarity;
+                    bestMatch = faq;
+                }
+            }
+        }
+
+        // If similarity is below threshold, return cannot answer message
+        if (bestScore < similarityThreshold || !bestMatch) {
+            return res.json({
+                success: true,
+                answer: "I'm sorry, I cannot answer that question. Please try rephrasing your question or ask about SentinelIS setup, features, or information security.",
+                similarity: bestScore
+            });
+        }
+
+        // Return the answer
+        return res.json({
+            success: true,
+            answer: bestMatch.answer,
+            similarity: bestScore
+        });
+
+    } catch (err) {
+        console.error('Chatbot error:', err);
+        return res.status(500).json({ success: false, message: 'Server error: ' + err.message });
+    }
+});
 
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);

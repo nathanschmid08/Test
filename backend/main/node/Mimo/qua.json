@@ -1,0 +1,31 @@
+{
+    "faqs": [
+        {
+            "questions": [
+                "What is SentinelIS?"
+            ],
+            "answer": "SentinelIS is an open source Information Security Management System. Our goal is to help you maintain and improve your way of protecting your most valuable and sensitive information."
+        },
+        {
+            "questions": [
+                "Who is Mimo?",
+                "Who are you?",
+                "What can Mimo do?"
+            ],
+            "answer": "Mimo is your personal chat assistant integrated into SentinelIS. Mimo can help you with configuring requirements, answering questions about information security, and guiding you through the setup process of SentinelIS."
+        },
+        {
+            "questions": [
+                "Why should i use SentinelIS?"
+            ],
+            "answer": "SentinelIS is a feature-rich, open source Information Security Management System that helps organizations manage your information security processes effectively."
+        },
+        {
+            "questions": [
+                "What is my company data used for?",
+                "What is my data used for?"
+            ],
+            "answer": "SentinelIS is self-hosted, meaning all your data is stored on your own servers. We do not collect or store any of your company data."
+        }
+    ]
+}
