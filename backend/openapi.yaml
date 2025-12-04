@@ -4,3 +4,124 @@
 # POST /api/login       - user login
 # POST /api/setup       - initial setup for a new company
 # POST /api/users       - create a new user for an existing company
+# POST /api/chatbot     - interact with Mimo Chatbot for SentinelIS questions
+
+openapi: 3.0.0
+info:
+  title: SentinelIS Backend API
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:3000
+
+paths:
+  /api/test:
+    get:
+      summary: Test database connection
+      description: Executes a simple SELECT 1 query to verify DB connectivity.
+      responses:
+        '200':
+          description: Successful DB connection result
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: Database connected
+                  data:
+                    type: array
+                    items:
+                      type: object
+                    example:
+                      - 1: 1
+        '500':
+          description: Database connection error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+
+  /api/login:
+    post:
+      summary: User login
+      description: Validates company, username and password.  
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - company
+                - username
+                - password
+              properties:
+                company:
+                  type: string
+                  example: "ABC"
+                username:
+                  type: string
+                  example: "JDoe"
+                password:
+                  type: string
+                  example: "mypassword123"
+      responses:
+        '200':
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  redirect:
+                    type: string
+                    example: /dashboard.html
+
+        '400':
+          description: Missing credentials
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: Missing credentials
+
+        '401':
+          description: Invalid company, username, or password
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: Invalid password
+
+        '500':
+          description: Server error during login
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string

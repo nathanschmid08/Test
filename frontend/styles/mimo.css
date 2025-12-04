@@ -85,8 +85,8 @@
 }
 
 .mimo-chat-close:hover{
-    background:var(--border);
-    color:var(--navy);
+    background: #dc2626;
+    color: #fff;
 }
 
 .mimo-chat-close i{
