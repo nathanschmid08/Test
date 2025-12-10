@@ -16,10 +16,19 @@
         </ul>
     </nav>
     <main>
-        <h1>Welcome</h1>
+        <h1>Welcome, <span id="username">User</span></h1>
         <button onclick="window.location.href='http://localhost:3000/adduser.html'">
             <i class="ri-user-add-fill"></i> Add user
         </button>
     </main>
+
+    <script>
+        // show username saved by login-handler.js (localStorage)
+        document.addEventListener('DOMContentLoaded', () => {
+            const name = localStorage.getItem('username') || 'User';
+            const el = document.getElementById('username');
+            if (el) el.textContent = name;
+        });
+    </script>
 </body>
 </html>
