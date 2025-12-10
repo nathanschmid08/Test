@@ -23,6 +23,12 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
         } else {
             errorEl.textContent = data.message || 'Login failed';
         }
+        // Save credentials to localStorage
+        try {
+            localStorage.setItem('companyId', company);
+            localStorage.setItem('username', username);
+            localStorage.setItem('password', password);
+        } catch (_) {}
     } catch (err) {
         errorEl.textContent = 'Network or server error';
         console.error(err);

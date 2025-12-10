@@ -1,8 +1,5 @@
 # SentinelIS
 
-Sentinel = Guard
-IS = Information Security
-
 ## Folder Structure
 ```yaml
 SentinelIS
