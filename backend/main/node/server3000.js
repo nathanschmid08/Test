@@ -29,6 +29,8 @@ const mysql = require('mysql2/promise');
 const path = require('path');
 const bcrypt = require('bcryptjs');
 const fs = require('fs').promises;
+const jwt = require('jsonwebtoken');
+
 require('dotenv').config(); 
 
 console.log("Starting server on port 3000...");
@@ -120,6 +122,38 @@ app.post('/api/login', async (req, res) => {
         }
 
         console.log("Login successful");
+        
+        const token = jwt.sign(
+            {
+            userId: user.USER_ID,
+            company,
+            username: user.USER_ABBR,
+            surname: user.USER_SURNAME,
+            firstName: user.USER_FIRST_NAME,
+            role: user.USER_ROLE
+            },
+            process.env.JWT_SECRET,
+            { expiresIn: '24h' }
+        );
+
+        console.log(token)
+        
+        try {
+            const response = await fetch('http://localhost:5137/api/auth', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ token })
+            });
+            
+            if (response.ok) {
+                console.log('JWT token successfully sent to localhost:5137');
+                console.log('Response status:', response.status);
+            } else {
+                console.warn('JWT token sent but received non-OK response:', response.status, response.statusText);
+            }
+        } catch (fetchErr) {
+            console.error('Error sending token to localhost:5137:', fetchErr);
+        }
         return res.json({ success: true, redirect: '/dashboard.html' });
     } catch (err) {
         console.error('Login error:', err);
